@@ -57,7 +57,7 @@ type TestAddFunction() =
 
     [<Test>]
     member this.AddThreeNumbersWithHashAsADelimiter() =
-        let s = "//[#]\n15#13#12#20"
+        let s = "//#\n15#13#12#20"
         let expectedResult = 60
         Assert.AreEqual(expectedResult, (add (s)))
 
