@@ -10,9 +10,11 @@ let add (s : String) : int =
         let mutable inputString = s
         let mutable delimiter = ','
         //check it the string starts with custom delimater
-        if Regex.Match(s, "^//.\n").Success then
-            delimiter <- s.[2]
-            inputString <- s.[4..]
+
+        let checkDelimiterRegex = Regex.Match(s, "^//\[?([^][\n]*)\]?\n(.*)")
+        if checkDelimiterRegex.Success then
+            let multiCharDelimiter = checkDelimiterRegex.Groups.Item(1).ToString()
+            inputString <- checkDelimiterRegex.Groups.Item(2).ToString().Replace(multiCharDelimiter, ",")
 
         let numbers = inputString.Split [| delimiter; '\n' |]
         //check that there are no two delimiters after each other
@@ -22,9 +24,9 @@ let add (s : String) : int =
         else
             let sum = numbers
                       |> Array.map (fun num -> int (num))
-                      |> Array.filter(fun num -> num <= 1000)
+                      |> Array.filter (fun num -> num <= 1000)
                       |> Array.reduce (+)
-            
+
             sum
 
 
