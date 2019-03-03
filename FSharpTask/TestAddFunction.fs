@@ -7,7 +7,13 @@ open NUnit.Framework
 type TestAddFunction() =
 
     [<Test>]
-    member this.testAddOfEmptyString() =
+    member this.AddOfEmptyString() =
         let s = ""
         let expectedResult = 0
         Assert.AreEqual(expectedResult, (add (s)))
+    [<Test>]
+    member this.AddOfOneNumberAndItIsNumber2() =
+        let s = "2"
+        let expectedResult = 2
+        Assert.AreEqual(expectedResult, (add (s)))
+    
