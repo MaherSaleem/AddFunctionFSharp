@@ -8,26 +8,26 @@ let add (s : String) : int =
         0
     else
         //default values for input strings and delimiter
-        let mutable inputString = s
+        let mutable inputString = s.Replace('\n', ' ') // since dot in regex can't match new line
         let mutable delimiter = ','
         //check it the string starts with custom delimater
 
         //function to get the regex that matches multi-delimiter
         let getRegexPattern : String =
-            let mutable numberOfOpenBrackets = s |> String.filter (fun c -> c = '[') |> String.length
+            let mutable numberOfOpenBrackets = inputString |> String.filter (fun c -> c = '[') |> String.length
             
             //assuming that there are at least one (to keep step 4 wroking)
             if numberOfOpenBrackets = 0 then
                 numberOfOpenBrackets <- 1
             let mutable regexPattern = "^//"
             for i in [ 1..numberOfOpenBrackets ] do
-                regexPattern <- regexPattern + "(\[?[^][\n]*\]?)"
-            regexPattern <- regexPattern + "\n(.*)"
+                regexPattern <- regexPattern + "(\[?[^][ ]*\]?)"
+            regexPattern <- regexPattern + " (.*)"
             regexPattern
             
             
         let regexPattern = getRegexPattern
-        let checkDelimiterRegex = Regex.Match(s, regexPattern)
+        let checkDelimiterRegex = Regex.Match(inputString, regexPattern)
         //check if there are multi-delimiter
         if checkDelimiterRegex.Success then
             let numberOfDelimiters = checkDelimiterRegex.Groups.Count - 2 // -2 since first one is the full match, and last one is the original stirng to be calcualted
@@ -38,7 +38,7 @@ let add (s : String) : int =
                 //Replace all types of delimiters with ,
                 inputString <- inputString.Replace(multiCharDelimiter, ",")
 
-        let numbers = inputString.Split [| delimiter; '\n' |]
+        let numbers = inputString.Split [| delimiter; ' ' |]
         //check that there are no two delimiters after each other
         if numbers |> Array.exists (fun num -> num.Equals("")) then
             printfn "Invalid string"
