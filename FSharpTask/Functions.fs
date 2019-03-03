@@ -5,8 +5,8 @@ let add (s : String) : int =
     if s.Equals("") then
         0
     elif s.Contains(",") then
-        let charToInt c = int c - int '0'
-        ((charToInt s.[0]) + (charToInt s.[2]))
+        let twoNumbers = s.Split [| ',' |]
+        (int (twoNumbers.[0]) + int (twoNumbers.[1]))
     else
         int (s)
 
