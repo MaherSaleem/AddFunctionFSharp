@@ -41,4 +41,10 @@ type TestAddFunction() =
         let s = "15,13,12,20,100"
         let expectedResult = 160
         Assert.AreEqual(expectedResult, (add (s)))
+        
+    [<Test>]
+    member this.AddFourNumbersThatHaveNewLineInsideTheString() =
+        let s = "15\n13,12\n20"
+        let expectedResult = 60
+        Assert.AreEqual(expectedResult, (add (s)))
 
