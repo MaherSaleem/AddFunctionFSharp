@@ -11,14 +11,21 @@ type TestAddFunction() =
         let s = ""
         let expectedResult = 0
         Assert.AreEqual(expectedResult, (add (s)))
+        
     [<Test>]
     member this.AddOfOneNumberAndItIsNumber2() =
         let s = "2"
         let expectedResult = 2
         Assert.AreEqual(expectedResult, (add (s)))
+        
     [<Test>]
     member this.AddOfOneNumberAndItIsNumber5() =
         let s = "5"
         let expectedResult = 5
         Assert.AreEqual(expectedResult, (add (s)))
-    
+        
+    [<Test>]
+    member this.AddTwoNumbers3And4SeperatedByComma() =
+        let s = "3,4"
+        let expectedResult = 7
+        Assert.AreEqual(expectedResult, (add (s)))
