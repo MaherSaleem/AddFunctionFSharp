@@ -16,4 +16,9 @@ type TestAddFunction() =
         let s = "2"
         let expectedResult = 2
         Assert.AreEqual(expectedResult, (add (s)))
+    [<Test>]
+    member this.AddOfOneNumberAndItIsNumber5() =
+        let s = "5"
+        let expectedResult = 5
+        Assert.AreEqual(expectedResult, (add (s)))
     
