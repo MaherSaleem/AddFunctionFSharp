@@ -2,8 +2,8 @@
 open System
 
 let add (s : String) : int =
-     if s.Equals("2") then
-         2
-     else 0
-
+    if s.Equals("") then
+        0
+    else
+        int (s)
 
