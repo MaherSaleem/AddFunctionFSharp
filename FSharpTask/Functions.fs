@@ -36,7 +36,7 @@ let add (s : String) : int =
                 //get the current delimiter
                 let multiCharDelimiter = checkDelimiterRegex.Groups.Item(i).ToString().Trim([| '['; ']' |])
                 //Replace all types of delimiters with ,
-                inputString <- inputString.Replace(multiCharDelimiter, ",")
+                inputString <- inputString.Replace(multiCharDelimiter, delimiter.ToString())
 
         let numbers = inputString.Split [| delimiter; ' ' |]
         
@@ -44,7 +44,6 @@ let add (s : String) : int =
         if negativeNumbers.Length > 0 then
                 raise ( new InvalidOperationException ("Can't Pass Negative Numbers" + Array.fold(fun concat num -> concat + num + ", " ) "" negativeNumbers)  )
 
-        printfn "Negative numbers are %A" negativeNumbers
         //check that there are no two delimiters after each other
         if numbers |> Array.exists (fun num -> num.Equals("")) then
             printfn "Invalid string"
