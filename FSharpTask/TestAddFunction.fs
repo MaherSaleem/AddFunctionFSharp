@@ -66,3 +66,8 @@ type TestAddFunction() =
         let s = "//;\n15;13;12\n20"
         let expectedResult = 60
         Assert.AreEqual(expectedResult, (add (s)))
+    [<Test>]
+    member this.IgnoreTwoNumbersThatAreGreaterThan1000() =
+        let s = "200,100,1500,300000"
+        let expectedResult = 300
+        Assert.AreEqual(expectedResult, (add (s)))
