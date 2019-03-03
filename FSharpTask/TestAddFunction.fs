@@ -54,3 +54,15 @@ type TestAddFunction() =
         let s = "15\n,13,12\n20"
         let expectedResult = -1
         Assert.AreEqual(expectedResult, (add (s)))
+        
+    [<Test>]
+    member this.AddThreeNumbersWithHashAsADelimiter() =
+        let s = "//#\n15#13#12#20"
+        let expectedResult = 60
+        Assert.AreEqual(expectedResult, (add (s)))
+        
+    [<Test>]
+    member this.AddThreeNumbersWithSemiColonAsADelimiterAndNewLines() =
+        let s = "//;\n15;13;12\n20"
+        let expectedResult = 60
+        Assert.AreEqual(expectedResult, (add (s)))
