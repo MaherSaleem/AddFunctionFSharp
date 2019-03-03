@@ -11,10 +11,22 @@ let add (s : String) : int =
         let mutable delimiter = ','
         //check it the string starts with custom delimater
 
-        let checkDelimiterRegex = Regex.Match(s, "^//\[?([^][\n]*)\]?\n(.*)")
+        let getRegexPattern : String =
+            let numberOfOpenBrackets = s |> String.filter (fun c -> c = '[') |> String.length
+            let mutable regexPattern = "^//"
+            for i in [ 1..numberOfOpenBrackets ] do
+                regexPattern <- regexPattern + "(\[[^][\n]*\])"
+            regexPattern <- regexPattern + "\n(.*)"
+            regexPattern
+        let regexPattern = getRegexPattern
+
+        let checkDelimiterRegex = Regex.Match(s, regexPattern)
         if checkDelimiterRegex.Success then
-            let multiCharDelimiter = checkDelimiterRegex.Groups.Item(1).ToString()
-            inputString <- checkDelimiterRegex.Groups.Item(2).ToString().Replace(multiCharDelimiter, ",")
+            let numberOfDelimiters = checkDelimiterRegex.Groups.Count - 2
+            inputString <- checkDelimiterRegex.Groups.Item(numberOfDelimiters + 1).ToString()
+            for i in [ 1..numberOfDelimiters ] do
+                let multiCharDelimiter = checkDelimiterRegex.Groups.Item(i).ToString().Trim([|'['; ']'|])
+                inputString <- inputString.Replace(multiCharDelimiter, ",")
 
         let numbers = inputString.Split [| delimiter; '\n' |]
         //check that there are no two delimiters after each other
