@@ -48,3 +48,9 @@ type TestAddFunction() =
         let expectedResult = 60
         Assert.AreEqual(expectedResult, (add (s)))
 
+
+    [<Test>]
+    member this.AddFourNumberWithInvalidString() =
+        let s = "15\n,13,12\n20"
+        let expectedResult = -1
+        Assert.AreEqual(expectedResult, (add (s)))
