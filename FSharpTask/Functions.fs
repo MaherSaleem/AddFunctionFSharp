@@ -20,7 +20,11 @@ let add (s : String) : int =
             printfn "Invalid string"
             -1
         else
-            let sum = numbers |> Array.map (fun num -> int (num)) |> Array.reduce (+)
+            let sum = numbers
+                      |> Array.map (fun num -> int (num))
+                      |> Array.filter(fun num -> num <= 1000)
+                      |> Array.reduce (+)
+            
             sum
 
 
