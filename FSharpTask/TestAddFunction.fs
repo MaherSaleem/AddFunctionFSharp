@@ -97,3 +97,10 @@ type TestAddFunction() =
         let s = "//[***][##]\n100##200***50***1500"
         let expectedResult = 350
         Assert.AreEqual(expectedResult, (add (s)))
+
+    [<Test>]
+    member this.AddingNegativeNumbersWillThroughAnExcpetion() =
+        let s = "//[***][##]\n100##-200***-50***1500"
+        Assert.Throws<InvalidOperationException>(fun () -> add (s) |> ignore) |> ignore
+
+

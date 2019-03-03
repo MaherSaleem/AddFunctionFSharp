@@ -15,7 +15,7 @@ let add (s : String) : int =
         //function to get the regex that matches multi-delimiter
         let getRegexPattern : String =
             let mutable numberOfOpenBrackets = inputString |> String.filter (fun c -> c = '[') |> String.length
-            
+
             //assuming that there are at least one (to keep step 4 wroking)
             if numberOfOpenBrackets = 0 then
                 numberOfOpenBrackets <- 1
@@ -24,8 +24,8 @@ let add (s : String) : int =
                 regexPattern <- regexPattern + "(\[?[^][ ]*\]?)"
             regexPattern <- regexPattern + " (.*)"
             regexPattern
-            
-            
+
+
         let regexPattern = getRegexPattern
         let checkDelimiterRegex = Regex.Match(inputString, regexPattern)
         //check if there are multi-delimiter
@@ -39,6 +39,12 @@ let add (s : String) : int =
                 inputString <- inputString.Replace(multiCharDelimiter, ",")
 
         let numbers = inputString.Split [| delimiter; ' ' |]
+        
+        let negativeNumbers = numbers |> Array.filter(fun num -> num.StartsWith("-"))
+        if negativeNumbers.Length > 0 then
+                raise ( new InvalidOperationException ("Can't Pass Negative Numbers" + Array.fold(fun concat num -> concat + num + ", " ) "" negativeNumbers)  )
+
+        printfn "Negative numbers are %A" negativeNumbers
         //check that there are no two delimiters after each other
         if numbers |> Array.exists (fun num -> num.Equals("")) then
             printfn "Invalid string"
